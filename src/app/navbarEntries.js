@@ -1,4 +1,4 @@
-import { Cover } from './components/Moviescreen/Cover';
+import { Cover } from './components/Map/Cover';
 import React from 'react';
 
 export const navbarEntries = [
