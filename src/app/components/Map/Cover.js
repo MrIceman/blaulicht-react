@@ -28,7 +28,7 @@ export const Cover = () => {
   function LocationMarker() {
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
-      click() {
+      mouseover() {
         map.locate()
       },
       locationfound(e) {
@@ -46,7 +46,7 @@ export const Cover = () => {
 
   return (
     <MapContainer
-    center={{ lat: 51.505, lng: -0.09 }}
+    center={{ lat: 52.373920, lng: 9.73 }}
     zoom={13}
     scrollWheelZoom={true}>
       <TileLayer
