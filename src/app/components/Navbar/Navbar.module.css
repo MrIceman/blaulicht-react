@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px black;
+    height: 8vmax;
+    align-items: center;
+    overflow: hidden;
+}
+
+.navicon {
+    border-radius: 100%;
+    justify-content: center;
+    display: flex;
+    height: 50px;
+    max-height: 13vmin;
+    width: 50px;
+    max-width: 13vmin;
+    align-items: center;
+}
+
+.img {
+    width: 45%;
+    filter: invert(1);
+    max-height: 50%;
+}

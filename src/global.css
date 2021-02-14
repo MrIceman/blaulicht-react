@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'HKGrotesk';
+  src: local('HKGrotesk'), url('../src/fonts/HKGrotesk.otf') format('opentype');
+}
+@font-face {
+  font-family: 'HKGroteskReg';
+  src: local('HKGroteskReg'), url('../src/fonts/HKGrotesk.otf') format('opentype');
+}
+
+body {
+  margin: 0;
+  font-family: 'HKGrotesk';
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
+  overscroll-behavior: contain;
+}
+
+code {
+  font-family: 'HKGrotesk';
+}
+
+:root {
+  background-color: transparent;
+}
+
+.leaflet-container {
+  height: calc(100vh - 110px);
+  z-index: 1;
+  margin-top: 110px;
+  width: 100%;
+}
