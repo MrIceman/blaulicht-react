@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import L from 'leaflet';
 import { Button, Card } from "antd";
 import { Wrapper } from "../../../core/custom-elements"
-import { LogoutOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
 import Slider from "react-slick";
 import styles from './Cover.module.css'
 
@@ -31,6 +31,7 @@ export const Cover = () => {
   const [event, setEvent] = useState()
   const [map, setMap] = useState()
   const sliderRef = useRef(null)
+  const [bottomNavBarVisible, setBottomNavBarVisible] = useState(false)
 
   useEffect(() => {
     api.get('/external').then(res => {
@@ -109,25 +110,30 @@ export const Cover = () => {
         ))}
       </MapContainer>
 
-      <div className={styles.bottomNavBar}>
-        <Slider className={styles.slider} {...settings} ref={sliderRef}>
-          {event && event.map((entry) => (
-            <Card key={entry.id} className={styles.card}>
-              <div className={styles.card__title}>{entry.title}</div>
-              <div className={styles.card__description}>
-                {entry.classification_name}
-                <br/>
-                {entry.street}, {entry.city}
-                <br/>
-                {getDate(entry.date)}
-              </div>
-              <div className={styles.card__controls}>
-                <Button className={styles.card__controls__button} type="primary" shape="round" icon={<LogoutOutlined />} size="middle">Details</Button>
-                <Button className={styles.card__controls__button} type="default" shape="round" icon={<ShareAltOutlined />} size="middle">Share</Button>
-              </div>
-            </Card>
-          ))}
-        </Slider>
+      <div className={styles.testSection}>
+      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="link" shape="round" icon={!bottomNavBarVisible ? <UpOutlined /> : <DownOutlined />} size="large"/>
+      {bottomNavBarVisible && (
+        <div className={styles.bottomNavBar}>
+          <Slider className={styles.slider} {...settings} ref={sliderRef}>
+            {event && event.map((entry) => (
+              <Card key={entry.id} className={styles.card}>
+                <div className={styles.card__title}>{entry.title}</div>
+                <div className={styles.card__description}>
+                  {entry.classification_name}
+                  <br/>
+                  {entry.street}, {entry.city}
+                  <br/>
+                  {getDate(entry.date)}
+                </div>
+                <div className={styles.card__controls}>
+                  <Button className={styles.card__controls__button} type="primary" shape="round" icon={<LogoutOutlined />} size="middle">Details</Button>
+                  <Button className={styles.card__controls__button} type="default" shape="round" icon={<ShareAltOutlined />} size="middle">Share</Button>
+                </div>
+              </Card>
+            ))}
+          </Slider>
+        </div>
+      )}
       </div>
   </Wrapper>
   );

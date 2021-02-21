@@ -1,6 +1,5 @@
 .bottomNavBar {
-    position: absolute;
-    bottom: 0px;
+    position: relative;
     z-index: 2;
     width: 100vw;
     overflow: hidden;
@@ -54,4 +53,24 @@
 }
 .slider > :global(.slick-list) > :global(.slick-track) > :global(.slick-slide) > div {
     padding-bottom: 15px;
+}
+
+.testSection {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+.testSection__button {
+    z-index: 2;
+    margin-bottom: 15px;
+    height: 50px !important;
+    width: 50px !important;
+    padding: 0px !important;
+}
+.testSection__button > span {
+    font-size: 32px !important;
+    color: rgb(50, 50, 50)
 }
