@@ -111,7 +111,7 @@ export const Cover = () => {
       </MapContainer>
 
       <div className={styles.testSection}>
-      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="link" shape="round" icon={!bottomNavBarVisible ? <UpOutlined /> : <DownOutlined />} size="large"/>
+      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" icon={!bottomNavBarVisible ? <UpOutlined /> : <DownOutlined />} size="large"/>
       {bottomNavBarVisible && (
         <div className={styles.bottomNavBar}>
           <Slider className={styles.slider} {...settings} ref={sliderRef}>
