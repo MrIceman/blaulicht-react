@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { api } from "../../api";
 import 'leaflet/dist/leaflet.css';
@@ -30,6 +30,7 @@ export const Cover = () => {
   const dispatch = useDispatch()
   const [event, setEvent] = useState()
   const [map, setMap] = useState()
+  const sliderRef = useRef(null)
 
   useEffect(() => {
     api.get('/external').then(res => {
@@ -37,6 +38,22 @@ export const Cover = () => {
         console.log(res.data.result)
     })
   }, [dispatch])
+
+  const scroll = useCallback(
+    y => {
+      if (y > 0) {
+        return sliderRef?.current?.slickNext();
+      } else {
+        return sliderRef?.current?.slickPrev();
+      }
+    },
+    [sliderRef]
+  );
+ useEffect(() => {
+    window.addEventListener("wheel", e => {
+      scroll(e.deltaY);
+    });
+  }, [scroll]);
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null)
@@ -92,9 +109,8 @@ export const Cover = () => {
         ))}
       </MapContainer>
 
-
       <div className={styles.bottomNavBar}>
-        <Slider className={styles.slider} {...settings}>
+        <Slider className={styles.slider} {...settings} ref={sliderRef}>
           {event && event.map((entry) => (
             <Card key={entry.id} className={styles.card}>
               <div className={styles.card__title}>{entry.title}</div>

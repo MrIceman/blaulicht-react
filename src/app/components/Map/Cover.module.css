@@ -43,9 +43,14 @@
 
 .slider {
     margin: auto 37.5vw;
+    min-width: 330px;
 }
 .slider > :global(.slick-list) {
     overflow: visible;
+}
+.slider > :global(.slick-list) > :global(.slick-track) > :global(.slick-slide) {
+    min-width: 200px;
+    padding-bottom: 15px;
 }
 .slider > :global(.slick-list) > :global(.slick-track) > :global(.slick-slide) > div {
     padding-bottom: 15px;
