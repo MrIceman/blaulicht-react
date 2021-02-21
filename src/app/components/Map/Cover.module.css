@@ -8,13 +8,41 @@
 
 .card {
     max-width: 95%;
-    border-radius: 10px;
-    box-shadow: 0px 5px 5px rgb(195, 195, 195);
-    height: 200px;
+    border-radius: 5px;
+    box-shadow: 0px 2.5px 5px rgb(195, 195, 195);
+
+}
+.card > :global(.ant-card-body) {
+    padding: 10px;
+    overflow: hidden;
+    height: 100%;
+}
+.card__title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 18px;
+}
+.card__description {
+    margin-top: 7.5px;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-transform: capitalize;
+    color: rgb(124, 124, 124);
+}
+.card__controls {
+    display: flex;
+    justify-content: flex-end;
+}
+.card__controls__button {
+    margin: 20px 0px 0px 5px;
 }
 
 .slider {
-    margin: auto 30vw;
+    margin: auto 37.5vw;
 }
 .slider > :global(.slick-list) {
     overflow: visible;
