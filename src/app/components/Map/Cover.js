@@ -89,7 +89,7 @@ export const Cover = () => {
    }
 
   return (
-    <Wrapper>
+    <div>
       <MapContainer
       center={{ lat: 52.373920, lng: 9.73 }}
       zoom={13}
@@ -111,31 +111,32 @@ export const Cover = () => {
         ))}
       </MapContainer>
 
-      <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
-      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg'}} icon={<UpOutlined />} size="large"/>
+      <div className={styles.parent}>
+        <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
+        <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg'}} icon={<UpOutlined />} size="large"/>
 
-        <div className={styles.bottomNavBar}>
-          <Slider className={styles.slider} {...settings} ref={sliderRef}>
-            {event && event.map((entry) => (
-              <Card key={entry.id} className={styles.card}>
-                <div className={styles.card__title}>{entry.title}</div>
-                <div className={styles.card__description}>
-                  {entry.classification_name}
-                  <br/>
-                  {entry.street}, {entry.city}
-                  <br/>
-                  {getDate(entry.date)}
-                </div>
-                <div className={styles.card__controls}>
-                  <Button className={styles.card__controls__button} type="primary" shape="round" icon={<LogoutOutlined />} size="middle">Details</Button>
-                  <Button className={styles.card__controls__button} type="default" shape="round" icon={<ShareAltOutlined />} size="middle">Share</Button>
-                </div>
-              </Card>
-            ))}
-          </Slider>
+          <div className={styles.bottomNavBar}>
+            <Slider className={styles.slider} {...settings} ref={sliderRef}>
+              {event && event.map((entry) => (
+                <Card key={entry.id} className={styles.card}>
+                  <div className={styles.card__title}>{entry.title}</div>
+                  <div className={styles.card__description}>
+                    {entry.classification_name}
+                    <br/>
+                    {entry.street}, {entry.city}
+                    <br/>
+                    {getDate(entry.date)}
+                  </div>
+                  <div className={styles.card__controls}>
+                    <Button className={styles.card__controls__button} type="primary" shape="round" icon={<LogoutOutlined />} size="middle">Details</Button>
+                    <Button className={styles.card__controls__button} type="default" shape="round" icon={<ShareAltOutlined />} size="middle">Share</Button>
+                  </div>
+                </Card>
+              ))}
+            </Slider>
+          </div>
         </div>
-
       </div>
-  </Wrapper>
+  </div>
   );
 }

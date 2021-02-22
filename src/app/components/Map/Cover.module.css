@@ -1,6 +1,5 @@
 .bottomNavBar {
     position: relative;
-    z-index: 2;
     width: 100vw;
     overflow: hidden;
 }
@@ -58,8 +57,13 @@
     padding-bottom: 15px;
 }
 
+.parent {
+    position: relative;
+}
+
 .testSection {
     position: absolute;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +71,6 @@
     transition: bottom .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .testSection__button {
-    z-index: 2;
     margin-bottom: 15px;
     height: 50px !important;
     width: 50px !important;
