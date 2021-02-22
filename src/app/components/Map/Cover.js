@@ -23,6 +23,7 @@ const settings = {
   slidesToShow: 1,
   arrows: false,
   centerMode: true,
+  lazyLoad: true,
 }
 
 export const Cover = () => {
@@ -31,7 +32,7 @@ export const Cover = () => {
   const [event, setEvent] = useState()
   const [map, setMap] = useState()
   const sliderRef = useRef(null)
-  const [bottomNavBarVisible, setBottomNavBarVisible] = useState(false)
+  const [bottomNavBarVisible, setBottomNavBarVisible] = useState(true)
 
   useEffect(() => {
     api.get('/external').then(res => {
@@ -110,9 +111,9 @@ export const Cover = () => {
         ))}
       </MapContainer>
 
-      <div className={styles.testSection}>
-      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" icon={!bottomNavBarVisible ? <UpOutlined /> : <DownOutlined />} size="large"/>
-      {bottomNavBarVisible && (
+      <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
+      <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg'}} icon={<UpOutlined />} size="large"/>
+
         <div className={styles.bottomNavBar}>
           <Slider className={styles.slider} {...settings} ref={sliderRef}>
             {event && event.map((entry) => (
@@ -133,7 +134,7 @@ export const Cover = () => {
             ))}
           </Slider>
         </div>
-      )}
+
       </div>
   </Wrapper>
   );
