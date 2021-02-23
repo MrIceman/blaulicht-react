@@ -5,8 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import L from 'leaflet';
 import { Button, Card } from "antd";
-import { Wrapper } from "../../../core/custom-elements"
-import { DownOutlined, LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
+import { LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
 import Slider from "react-slick";
 import styles from './Cover.module.css'
 
@@ -18,26 +17,26 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-const settings = {
-  infinite: false,
-  slidesToShow: 1,
-  arrows: false,
-  centerMode: true,
-  lazyLoad: true,
-}
-
 export const Cover = () => {
 
   const dispatch = useDispatch()
   const [event, setEvent] = useState()
+  //const [showItems, setShowItems] = useState(50)
   const [map, setMap] = useState()
   const sliderRef = useRef(null)
   const [bottomNavBarVisible, setBottomNavBarVisible] = useState(true)
 
+  const settings = {
+    infinite: false,
+    slidesToShow: 1,
+    arrows: false,
+    centerMode: true,
+    lazyLoad: true,
+  }
+
   useEffect(() => {
     api.get('/external').then(res => {
         setEvent(res.data.result)
-        console.log(res.data.result)
     })
   }, [dispatch])
 
@@ -51,11 +50,16 @@ export const Cover = () => {
     },
     [sliderRef]
   );
- useEffect(() => {
+
+  useEffect(() => {
     window.addEventListener("wheel", e => {
       scroll(e.deltaY);
     });
   }, [scroll]);
+
+  const openMarker = (lat, lng) => {
+    map.flyTo({lat, lng})
+  }
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null)
@@ -73,7 +77,7 @@ export const Cover = () => {
     )
   }
 
-  const fireLocationEvent = (map) => {
+  const fireLocationEvent = () => {
     map.locate()
   }
 
@@ -114,11 +118,10 @@ export const Cover = () => {
       <div className={styles.parent}>
         <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
         <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg'}} icon={<UpOutlined />} size="large"/>
-
           <div className={styles.bottomNavBar}>
             <Slider className={styles.slider} {...settings} ref={sliderRef}>
-              {event && event.map((entry) => (
-                <Card key={entry.id} className={styles.card}>
+              {event && event/*.slice(0, showItems)*/.map((entry) => (
+                <Card key={entry.id} className={styles.card} onClick={() => openMarker(entry.lat, entry.lng)}>
                   <div className={styles.card__title}>{entry.title}</div>
                   <div className={styles.card__description}>
                     {entry.classification_name}

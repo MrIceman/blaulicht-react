@@ -8,7 +8,11 @@
     max-width: 95%;
     border-radius: 5px;
     box-shadow: 0px 2.5px 5px rgb(195, 195, 195);
-
+    transition: transform .2s cubic-bezier(0.6, -0.28, 0.735, 0.045) !important;
+}
+.card:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }
 .card > :global(.ant-card-body) {
     padding: 10px;
@@ -45,6 +49,7 @@
 }
 .slider > :global(.slick-list) {
     overflow: visible;
+    margin-top: 15px;
 }
 .slider > :global(.slick-list) > :global(.slick-track) {
     margin-left: 25vw;
@@ -87,7 +92,7 @@
     border: 0;
 }
 .testSection__button > span {
-    font-size: 24px !important;
+    font-size: 20px !important;
     color: rgb(50, 50, 50);
     line-height: 0 !important;
 }
