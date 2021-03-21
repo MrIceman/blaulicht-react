@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import L from 'leaflet';
 import { Button, Card } from "antd";
-import { LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
+import { AimOutlined, LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
 import Slider from "react-slick";
 import styles from './Cover.module.css'
 
@@ -22,6 +22,8 @@ export const Cover = () => {
   const dispatch = useDispatch()
   const [event, setEvent] = useState()
   //const [showItems, setShowItems] = useState(50)
+  const [homePosition, setHomePosition] = useState(null)
+  const [/*currentPosition*/, setCurrentPosition] = useState()
   const [map, setMap] = useState()
   const sliderRef = useRef(null)
   const [bottomNavBarVisible, setBottomNavBarVisible] = useState(true)
@@ -59,27 +61,27 @@ export const Cover = () => {
 
   const openMarker = (lat, lng) => {
     map.flyTo({lat, lng})
+    setCurrentPosition({lat, lng})
   }
 
   const LocationMarker = () => {
-    const [position, setPosition] = useState(null)
     const map = useMapEvents({
       locationfound(e) {
-        setPosition(e.latlng)
+        setHomePosition(e.latlng)
         map.flyTo(e.latlng, map.getZoom())
       },
     })
   
-    return position === null ? null : (
-      <Marker position={position}>
+    return homePosition === null ? null : (
+      <Marker position={homePosition}>
         <Popup>You are here</Popup>
       </Marker>
     )
   }
 
-  /*const fireLocationEvent = () => {
+  const fireLocationEvent = () => {
     map.locate()
-  }*/
+  }
 
   const getDate = (test) => {
     const date = new Date(test*1000);
@@ -117,7 +119,10 @@ export const Cover = () => {
 
       <div className={styles.parent}>
         <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
-        <Button className={styles.testSection__button} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg'}} icon={<UpOutlined />} size="large"/>
+          <div className={styles.testSection__buttons}>
+            <Button className={`${styles.testSection__button} ${styles.show}`} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg)'}} icon={<UpOutlined />} size="large"/>
+            <Button className={`${styles.testSection__button} ${styles.locate}`} onClick={fireLocationEvent} type="primary" shape="round" icon={<AimOutlined />} size="large"/>
+          </div>
           <div className={styles.bottomNavBar}>
             <Slider className={styles.slider} {...settings} ref={sliderRef}>
               {event && event/*.slice(0, showItems)*/.map((entry) => (

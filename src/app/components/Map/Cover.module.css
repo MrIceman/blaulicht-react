@@ -75,8 +75,13 @@
     width: 100vw;
     transition: bottom .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-.testSection__button {
+.testSection__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 15px;
+}
+.testSection__button {
     height: 50px !important;
     width: 50px !important;
     padding: 0px !important;
@@ -86,6 +91,12 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 5px rgb(195, 195, 195);
+}
+.show {
+    margin: 0 auto;
+}
+.locate {
+    margin-right: 15px;
 }
 .testSection__button:hover, .testSection__button:focus {
     background: white;
