@@ -77,9 +77,9 @@ export const Cover = () => {
     )
   }
 
-  const fireLocationEvent = () => {
+  /*const fireLocationEvent = () => {
     map.locate()
-  }
+  }*/
 
   const getDate = (test) => {
     const date = new Date(test*1000);

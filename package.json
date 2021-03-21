@@ -6,6 +6,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
     "antd": "^4.4.1",
+    "aws": "0.0.3-2",
     "axios": "^0.19.2",
     "html2canvas": "^1.0.0-rc.5",
     "leaflet": "^1.7.1",
