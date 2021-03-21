@@ -93,7 +93,7 @@
     box-shadow: 0px 0px 5px rgb(195, 195, 195);
 }
 .show {
-    margin: 0 auto;
+    margin-left: calc((100vw / 2) - 25px);
 }
 .locate {
     margin-right: 15px;
