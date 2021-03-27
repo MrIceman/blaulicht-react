@@ -4,7 +4,7 @@ import { api } from "../../api";
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import L from 'leaflet';
-import { Button, Card } from "antd";
+import { Button, Card, Drawer } from "antd";
 import { AimOutlined, LogoutOutlined, ShareAltOutlined, UpOutlined } from '@ant-design/icons';
 import Slider from "react-slick";
 import styles from './Cover.module.css'
@@ -23,8 +23,9 @@ export const Cover = () => {
   const [event, setEvent] = useState()
   //const [showItems, setShowItems] = useState(50)
   const [homePosition, setHomePosition] = useState(null)
-  const [/*currentPosition*/, setCurrentPosition] = useState()
+  const [currentPosition, setCurrentPosition] = useState()
   const [map, setMap] = useState()
+  const [drawerVisible, setDrawerVisible] = useState(false)
   const sliderRef = useRef(null)
   const [bottomNavBarVisible, setBottomNavBarVisible] = useState(true)
 
@@ -39,6 +40,7 @@ export const Cover = () => {
   useEffect(() => {
     api.get('/external').then(res => {
         setEvent(res.data.result)
+        console.log(res.data.result)
     })
   }, [dispatch])
 
@@ -59,9 +61,11 @@ export const Cover = () => {
     });
   }, [scroll]);
 
-  const openMarker = (lat, lng) => {
+  const openMarker = (entry) => {
+    const lat = entry.lat
+    const lng = entry.lng
     map.flyTo({lat, lng})
-    setCurrentPosition({lat, lng})
+    setCurrentPosition(entry)
   }
 
   const LocationMarker = () => {
@@ -96,6 +100,9 @@ export const Cover = () => {
 
   return (
     <div>
+
+
+
       <MapContainer
       center={{ lat: 52.373920, lng: 9.73 }}
       zoom={13}
@@ -109,10 +116,13 @@ export const Cover = () => {
         <LocationMarker />
 
         {event && event.map((entry) => (
-          <Marker key={entry.id} position={{ lat: `${entry.lat}`, lng: `${entry.lng}` }}>
-            <Popup>
-              {entry.title}
-            </Popup>
+          <Marker key={entry.id} position={{ lat: `${entry.lat}`, lng: `${entry.lng}` }}
+          eventHandlers={{
+            click: (e) => {
+              setCurrentPosition(entry)
+              setDrawerVisible(true)
+            },
+          }}>
           </Marker>
         ))}
       </MapContainer>
@@ -120,13 +130,13 @@ export const Cover = () => {
       <div className={styles.parent}>
         <div className={styles.testSection} style={!bottomNavBarVisible ? {bottom:'0px'} : {bottom:'-220px'}}>
           <div className={styles.testSection__buttons}>
-            <Button className={`${styles.testSection__button} ${styles.show}`} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" style={!bottomNavBarVisible ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0deg)'}} icon={<UpOutlined />} size="large"/>
-            <Button className={`${styles.testSection__button} ${styles.locate}`} onClick={fireLocationEvent} type="primary" shape="round" icon={<AimOutlined />} size="large"/>
+            <Button className={`${styles.testSection__button} ${styles.show} ${!bottomNavBarVisible && styles.rotated} ${drawerVisible && styles.centered}`} onClick={() => setBottomNavBarVisible(!bottomNavBarVisible)} type="primary" shape="round" icon={<UpOutlined />} size="large"/>
+            <Button className={`${styles.testSection__button} ${styles.locate}`} onClick={fireLocationEvent} type="primary" shape="round" icon={<AimOutlined />} style={drawerVisible ? {marginRight:'26vw'} : null} size="large"/>
           </div>
           <div className={styles.bottomNavBar}>
-            <Slider className={styles.slider} {...settings} ref={sliderRef}>
+            <Slider className={!drawerVisible ? styles.slider : styles.reducedSlider} {...settings} ref={sliderRef}>
               {event && event/*.slice(0, showItems)*/.map((entry) => (
-                <Card key={entry.id} className={styles.card} onClick={() => openMarker(entry.lat, entry.lng)}>
+                <Card key={entry.id} className={styles.card} onClick={() => openMarker(entry)}>
                   <div className={styles.card__title}>{entry.title}</div>
                   <div className={styles.card__description}>
                     {entry.classification_name}
@@ -142,6 +152,13 @@ export const Cover = () => {
                 </Card>
               ))}
             </Slider>
+          </div>
+        </div>
+
+        <div className={styles.drawer} style={drawerVisible ? {right:'0px'} : {right:'-26vw'}}>
+          <Button style={{zIndex:'2'}} onClick={() => setDrawerVisible(false)}>Click</Button>
+          <div className={styles.drawer__content}>
+            {currentPosition && currentPosition.description}
           </div>
         </div>
       </div>
